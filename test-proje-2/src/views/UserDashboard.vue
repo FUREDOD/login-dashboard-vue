@@ -1,11 +1,9 @@
-<!-- eslint-disable prettier/prettier -->
-<!-- eslint-disable prettier/prettier -->
 <template>
   <div class="dashboard">
     <header>
       <h1>Dashboard</h1>
       <div class="search-box">
-        <input type="text" placeholder="Search...">
+        <input type="text" placeholder="Search..." />
         <button>Search</button>
       </div>
     </header>
@@ -23,11 +21,11 @@
 </template>
 
 <script>
-import Widget from './Widget.vue';
-import LineChart from './LineChart.vue';
+import Widget from "../views/UserWidget.vue";
+import LineChart from "..//views/LineChart.vue";
 
 export default {
-  name: 'UserDashboard',
+  name: "UserDashboard",
   components: {
     Widget,
     LineChart,
@@ -35,33 +33,33 @@ export default {
   data() {
     return {
       salesData: [
-        { month: 'Jan', sales: 1000 },
-        { month: 'Feb', sales: 1200 },
-        { month: 'Mar', sales: 800 },
-        { month: 'Apr', sales: 1500 },
-        { month: 'May', sales: 1700 },
-        { month: 'Jun', sales: 1300 },
+        { month: "Jan", sales: 1000 },
+        { month: "Feb", sales: 1200 },
+        { month: "Mar", sales: 800 },
+        { month: "Apr", sales: 1500 },
+        { month: "May", sales: 1700 },
+        { month: "Jun", sales: 1300 },
       ],
       activityData: [
-        { user: 'John', activity: 'Logged in' },
-        { user: 'Jane', activity: 'Added item to cart' },
-        { user: 'Bob', activity: 'Viewed product' },
-        { user: 'Mary', activity: 'Purchased item' },
+        { user: "John", activity: "Logged in" },
+        { user: "Jane", activity: "Added item to cart" },
+        { user: "Bob", activity: "Viewed product" },
+        { user: "Mary", activity: "Purchased item" },
       ],
       productData: [
-        { name: 'Product A', sales: 500 },
-        { name: 'Product B', sales: 700 },
-        { name: 'Product C', sales: 900 },
-        { name: 'Product D', sales: 1200 },
+        { name: "Product A", sales: 500 },
+        { name: "Product B", sales: 700 },
+        { name: "Product C", sales: 900 },
+        { name: "Product D", sales: 1200 },
       ],
       chartData: {
-        labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
+        labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun"],
         datasets: [
           {
-            label: 'Sales',
+            label: "Sales",
             data: [1000, 1200, 800, 1500, 1700, 1300],
-            backgroundColor: 'rgba(255, 99, 132, 0.2)',
-            borderColor: 'rgba(255, 99, 132, 1)',
+            backgroundColor: "rgba(255, 99, 132, 0.2)",
+            borderColor: "rgba(255, 99, 132, 1)",
             borderWidth: 1,
           },
         ],
@@ -71,7 +69,7 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 .dashboard {
   max-width: 1200px;
   margin: 0 auto;
@@ -106,4 +104,6 @@ h1 {
   outline: none;
   background-color: #333;
   color: #fff;
-  cursor: pointer;}
+  cursor: pointer;
+}
+</style>
