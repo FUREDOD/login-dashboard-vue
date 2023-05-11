@@ -82,6 +82,7 @@ export default {
   validations() {
     return {
       email: { required, email }, // Matches this.firstName
+      password: { required },
     };
   },
 };
