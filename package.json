@@ -1,0 +1,6 @@
+{
+  "dependencies": {
+    "@vuelidate/core": "^1.0.0-alpha.2",
+    "@vuelidate/validators": "^1.0.0-alpha.2"
+  }
+}
