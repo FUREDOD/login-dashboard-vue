@@ -19,7 +19,12 @@
       placeholder="Şifre"
       v-model="password"
       class="form-control"
+      :class="{ 'is-invalid': v$.password.$error }"
     />
+
+    <span v-if="v$.password.$error" style="color: red">
+      {{ v$.password.$errors[0].$message }}
+    </span>
 
     <button @click="submitData">Giriş yap</button>
   </div>
