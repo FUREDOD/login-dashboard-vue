@@ -19,11 +19,13 @@
       placeholder="Şifre"
       v-model="password"
       class="form-control"
+      minlength="8"
+      @blur="v$.password.$touch()"
       :class="{ 'is-invalid': v$.password.$error }"
     />
 
     <span v-if="v$.password.$error" style="color: red">
-      {{ v$.password.$errors[0].$message }}
+      {{ v$.password.$errors$message }}
     </span>
 
     <button @click="submitData">Giriş yap</button>
@@ -87,7 +89,7 @@ export default {
   validations() {
     return {
       email: { required, email }, // Matches this.firstName
-      password: { required },
+      password: { required, regex: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$/ },
     };
   },
 };

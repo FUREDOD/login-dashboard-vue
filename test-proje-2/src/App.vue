@@ -1,13 +1,5 @@
 <template>
   <div id="app">
-    <nav>
-      <router-link to="/">Home</router-link> |
-      <router-link to="/user-dashboard">User Dashboard</router-link> |
-      <router-link to="/about">About</router-link>
-      <button @click="$router.push('/user-dashboard')">
-        Go to User Dashboard
-      </button>
-    </nav>
     <router-view />
   </div>
 </template>
