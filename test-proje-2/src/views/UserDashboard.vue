@@ -211,11 +211,11 @@ h1 {
 .data-table td {
   padding: 8px;
   text-align: left;
-  border-bottom: 1px solid #ddd;
+  border-bottom: 1px solid #e76464;
 }
 
 .data-table th {
-  background-color: #f2f2f2;
+  background-color: #f86161;
   font-weight: bold;
 }
 </style>

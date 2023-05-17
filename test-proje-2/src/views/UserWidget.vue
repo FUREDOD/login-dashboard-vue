@@ -1,6 +1,6 @@
 <template>
   <div class="User Wigdet">
-    <h1>welcome Wigdet {{ title }} {{ data }}</h1>
+    <h1>{{ title }} {{ data }}</h1>
     <table>
       <thead>
         <tr>

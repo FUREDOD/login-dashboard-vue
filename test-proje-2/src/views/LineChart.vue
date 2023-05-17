@@ -1,6 +1,6 @@
 <template>
   <div class="User Line chart">
-    <h1>welcome Widget {{ title }} {{ data }}</h1>
+    <h1>{{ title }} {{ data }}</h1>
     <table>
       <thead>
         <tr>
