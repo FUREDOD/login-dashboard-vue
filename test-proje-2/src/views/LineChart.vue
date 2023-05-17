@@ -1,11 +1,11 @@
 <template>
   <div class="User Line chart">
     <h1>{{ title }} {{ data }}</h1>
-    <table>
+    <v-table>
       <thead>
         <tr>
-          <th>salesData</th>
-          <th>activityData</th>
+          <th class="text-left">salesData</th>
+          <th class="text-left">activityData</th>
         </tr>
       </thead>
       <tbody>
@@ -14,7 +14,7 @@
           <td>{{ item.activityData }}</td>
         </tr>
       </tbody>
-    </table>
+    </v-table>
   </div>
 </template>
 

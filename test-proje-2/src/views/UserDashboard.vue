@@ -36,22 +36,25 @@
             </v-window-item>
           </v-window>
         </v-card>
-        <table class="data-table">
+        <v-table class="data-table" theme="dark">
           <thead>
             <tr>
-              <th>Title</th>
-              <th>Data</th>
+              <th class="text-left">Title</th>
+              <th class="text-left">Data</th>
             </tr>
           </thead>
           <tbody>
-            <tr>
+            <tr v-for="item in desserts" :key="item.title">
+              <td>{{ item.title }}</td>
+              <td>{{ item.data }}</td>
+
               <td>Sales Overview</td>
               <td>
-                <table>
+                <v-table>
                   <thead>
                     <tr>
-                      <th>Month</th>
-                      <th>Sales</th>
+                      <th class="text-left">Month</th>
+                      <th class="text-left">Sales</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -60,17 +63,17 @@
                       <td>{{ item.sales }}</td>
                     </tr>
                   </tbody>
-                </table>
+                </v-table>
               </td>
             </tr>
             <tr>
               <td>User Activity</td>
               <td>
-                <table>
+                <v-table>
                   <thead>
                     <tr>
-                      <th>User</th>
-                      <th>Activity</th>
+                      <th class="text-left">User</th>
+                      <th class="text-left">Activity</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -79,17 +82,17 @@
                       <td>{{ item.activity }}</td>
                     </tr>
                   </tbody>
-                </table>
+                </v-table>
               </td>
             </tr>
             <tr>
               <td>Top Products</td>
               <td>
-                <table>
+                <v-table>
                   <thead>
                     <tr>
-                      <th>Name</th>
-                      <th>Sales</th>
+                      <th class="text-left">Name</th>
+                      <th class="text-left">Sales</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -98,11 +101,11 @@
                       <td>{{ item.sales }}</td>
                     </tr>
                   </tbody>
-                </table>
+                </v-table>
               </td>
             </tr>
           </tbody>
-        </table>
+        </v-table>
         <div class="chart-container">
           <line-chart :activitydata="activityData" />
         </div>
@@ -118,6 +121,7 @@ import LineChart from "..//views/LineChart.vue";
 export default {
   name: "UserDashboard",
   components: {
+    // eslint-disable-next-line vue/no-unused-components
     Widget,
     LineChart,
   },
@@ -211,11 +215,11 @@ h1 {
 .data-table td {
   padding: 8px;
   text-align: left;
-  border-bottom: 1px solid #e76464;
+  border-bottom: 1px solid #000000;
 }
 
 .data-table th {
-  background-color: #f86161;
+  background-color: #333;
   font-weight: bold;
 }
 </style>
