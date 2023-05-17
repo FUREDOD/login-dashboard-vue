@@ -1,6 +1,11 @@
 <template>
-  <div class="login">
-    <h3>Giriş yap</h3>
+  <div
+    class="login"
+    style="
+      background-image: url('https://storage.googleapis.com/talentopia/companies/logo/definexkare.png');
+    "
+  >
+    <h3>DefineX</h3>
 
     <input
       type="email"
@@ -25,19 +30,24 @@
     />
 
     <span v-if="v$.password.$error" style="color: red">
-      {{ v$.password.$errors$message }}
+      {{ v$.password.$errors[0].$message }}
     </span>
-
-    <button @click="submitData">Giriş yap</button>
+    <v-btn
+      color="blue"
+      dark
+      prepend-icon="mdi-vuetify"
+      append-icon="mdi-vuetify"
+      @click="submitData"
+    >
+      Giriş yap
+    </v-btn>
   </div>
 </template>
 
 <script>
 import Api from "../services/api";
-
 import { useVuelidate } from "@vuelidate/core";
-
-import { required, email } from "@vuelidate/validators";
+import { required, email, minLength, helpers } from "@vuelidate/validators";
 
 export default {
   name: "UserLogin",
@@ -49,7 +59,6 @@ export default {
   data() {
     return {
       email: "",
-
       password: "",
     };
   },
@@ -78,7 +87,7 @@ export default {
             this.$toast.error("Giriş başarısız.");
           }
         } else {
-          this.$toast.error("failed valid");
+          this.$toast.error("Geçerli olmayan giriş bilgileri.");
         }
       } catch (error) {
         console.error(error);
@@ -88,8 +97,16 @@ export default {
 
   validations() {
     return {
-      email: { required, email }, // Matches this.firstName
-      password: { required, regex: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$/ },
+      email: { required, email },
+      password: {
+        required,
+        minLength: minLength(8),
+        containsPasswordRequirement: helpers.withMessage(
+          () =>
+            `Şifre büyük harf, küçük harf, rakam ve özel karakter içermelidir.`,
+          (value) => /(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])/.test(value)
+        ),
+      },
     };
   },
 };
@@ -98,11 +115,8 @@ export default {
 <style scoped>
 .login {
   margin-top: 40px;
-
   display: flex;
-
   flex-direction: column;
-
   align-items: center;
 }
 
@@ -112,31 +126,24 @@ export default {
 
 input {
   margin: 10px 0;
-
   width: 25%;
-
   padding: 10px;
 }
 
 button {
   margin-top: 10px;
-
   width: 15%;
-
   cursor: pointer;
-
   padding: 10px;
 }
 
 p {
   margin-top: 40px;
-
   font-size: 14px;
 }
 
 p a {
   text-decoration: underline;
-
   cursor: pointer;
 }
 </style>

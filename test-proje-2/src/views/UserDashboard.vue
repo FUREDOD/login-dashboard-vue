@@ -1,7 +1,7 @@
 <template>
   <div class="dashboard">
     <header>
-      <h1>Dashboard</h1>
+      <h1></h1>
       <div class="search-box">
         <input type="text" placeholder="Search..." />
         <button>Search</button>
@@ -9,12 +9,103 @@
     </header>
     <section class="main-content">
       <div class="widgets-container">
-        <widget :title="'Sales Overview'" :data="salesData" />
-        <widget :title="'User Activity'" :data="activityData" />
-        <widget :title="'Top Products'" :data="productData" />
-      </div>
-      <div class="chart-container">
-        <line-chart :data="chartData" />
+        <v-card>
+          <v-toolbar color="primary">
+            <v-app-bar-nav-icon></v-app-bar-nav-icon>
+            <v-toolbar-title>Your Dashboard</v-toolbar-title>
+            <v-spacer></v-spacer>
+            <v-btn icon>
+              <v-icon>mdi-magnify</v-icon>
+            </v-btn>
+            <v-btn icon>
+              <v-icon>mdi-dots-vertical</v-icon>
+            </v-btn>
+            <template v-slot:extension>
+              <v-tabs v-model="tab" align-tabs="title">
+                <v-tab v-for="item in items" :key="item" :value="item">
+                  {{ item }}
+                </v-tab>
+              </v-tabs>
+            </template>
+          </v-toolbar>
+          <v-window v-model="tab">
+            <v-window-item v-for="item in items" :key="item" :value="item">
+              <v-card flat>
+                <v-card-text v-text="text"></v-card-text>
+              </v-card>
+            </v-window-item>
+          </v-window>
+        </v-card>
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th>Title</th>
+              <th>Data</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Sales Overview</td>
+              <td>
+                <table>
+                  <thead>
+                    <tr>
+                      <th>Month</th>
+                      <th>Sales</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr v-for="item in salesData" :key="item.month">
+                      <td>{{ item.month }}</td>
+                      <td>{{ item.sales }}</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </td>
+            </tr>
+            <tr>
+              <td>User Activity</td>
+              <td>
+                <table>
+                  <thead>
+                    <tr>
+                      <th>User</th>
+                      <th>Activity</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr v-for="item in activityData" :key="item.user">
+                      <td>{{ item.user }}</td>
+                      <td>{{ item.activity }}</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </td>
+            </tr>
+            <tr>
+              <td>Top Products</td>
+              <td>
+                <table>
+                  <thead>
+                    <tr>
+                      <th>Name</th>
+                      <th>Sales</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr v-for="item in productData" :key="item.name">
+                      <td>{{ item.name }}</td>
+                      <td>{{ item.sales }}</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+        <div class="chart-container">
+          <line-chart :activitydata="activityData" />
+        </div>
       </div>
     </section>
   </div>
@@ -64,6 +155,9 @@ export default {
           },
         ],
       },
+      tab: null,
+      items: ["web", "shopping", "videos", "images", "news"],
+      text: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
     };
   },
 };
@@ -105,5 +199,23 @@ h1 {
   background-color: #333;
   color: #fff;
   cursor: pointer;
+}
+
+.data-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+}
+
+.data-table th,
+.data-table td {
+  padding: 8px;
+  text-align: left;
+  border-bottom: 1px solid #ddd;
+}
+
+.data-table th {
+  background-color: #f2f2f2;
+  font-weight: bold;
 }
 </style>
