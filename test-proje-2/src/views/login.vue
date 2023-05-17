@@ -1,10 +1,8 @@
 <template>
-  <div
-    class="login"
-    style="
-      background-image: url('https://storage.googleapis.com/talentopia/companies/logo/definexkare.png');
-    "
-  >
+  <div class="login">
+    <div class="background-overlay"></div>
+    <div class="background-image"></div>
+    >
     <h3>DefineX</h3>
 
     <input
@@ -114,12 +112,44 @@ export default {
 
 <style scoped>
 .login {
+  background-color: blue;
+  background-image: url(https://docs.kariyer.net/job/jobtemplate/000/000/220/avatar/22027820200305031322126.jpeg);
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
   margin-top: 40px;
   display: flex;
   flex-direction: column;
   align-items: center;
+  height: 100vh; /* Sayfanın tamamını kaplaması için ekledik */
 }
 
+.is-invalid {
+  border: 1px solid red;
+}
+
+input {
+  margin: 10px 0;
+  width: 25%;
+  padding: 10px;
+}
+
+button {
+  margin-top: 10px;
+  width: 15%;
+  cursor: pointer;
+  padding: 10px;
+}
+
+p {
+  margin-top: 40px;
+  font-size: 14px;
+}
+
+p a {
+  text-decoration: underline;
+  cursor: pointer;
+}
 .is-invalid {
   border: 1px solid red;
 }
