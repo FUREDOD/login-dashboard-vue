@@ -1,7 +1,6 @@
 <template>
   <div class="dashboard">
     <header>
-      <h1></h1>
       <div class="search-box">
         <input type="text" placeholder="Search..." />
         <button>Search</button>
@@ -10,8 +9,8 @@
     <section class="main-content">
       <div class="widgets-container">
         <v-card>
-          <v-toolbar color="primary">
-            <v-app-bar-nav-icon></v-app-bar-nav-icon>
+          <v-toolbar color="green">
+            <v-app-bar-nav-icon>DefineX</v-app-bar-nav-icon>
             <v-toolbar-title>Your Dashboard</v-toolbar-title>
             <v-spacer></v-spacer>
             <v-btn icon>
@@ -215,7 +214,7 @@ h1 {
 .data-table td {
   padding: 8px;
   text-align: left;
-  border-bottom: 1px solid #fffefe;
+  border-bottom: 1px solid #2dc947;
 }
 
 .data-table th {

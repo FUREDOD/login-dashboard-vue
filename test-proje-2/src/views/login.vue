@@ -31,7 +31,7 @@
       {{ v$.password.$errors[0].$message }}
     </span>
     <v-btn
-      color="blue"
+      color="green"
       dark
       prepend-icon="mdi-vuetify"
       append-icon="mdi-vuetify"
