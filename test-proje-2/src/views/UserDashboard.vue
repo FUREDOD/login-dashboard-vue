@@ -36,7 +36,7 @@
             </v-window-item>
           </v-window>
         </v-card>
-        <v-table class="data-table" theme="dark">
+        <v-table class="data-table">
           <thead>
             <tr>
               <th class="text-left">Title</th>
@@ -215,11 +215,11 @@ h1 {
 .data-table td {
   padding: 8px;
   text-align: left;
-  border-bottom: 1px solid #000000;
+  border-bottom: 1px solid #fffefe;
 }
 
 .data-table th {
-  background-color: #333;
+  background-color: #f8f8f8;
   font-weight: bold;
 }
 </style>
