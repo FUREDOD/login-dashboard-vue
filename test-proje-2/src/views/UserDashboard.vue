@@ -9,7 +9,7 @@
     <section class="main-content">
       <div class="widgets-container">
         <v-card>
-          <v-toolbar color="green">
+          <v-toolbar color="blue">
             <v-app-bar-nav-icon>DefineX</v-app-bar-nav-icon>
             <v-toolbar-title>Your Dashboard</v-toolbar-title>
             <v-spacer></v-spacer>
