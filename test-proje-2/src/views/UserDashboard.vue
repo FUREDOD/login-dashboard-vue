@@ -1,3 +1,4 @@
+<!-- eslint-disable vue/no-unused-components -->
 <template>
   <div class="dashboard">
     <header>
@@ -120,7 +121,6 @@ import LineChart from "..//views/LineChart.vue";
 export default {
   name: "UserDashboard",
   components: {
-    // eslint-disable-next-line vue/no-unused-components
     Widget,
     LineChart,
   },
@@ -208,6 +208,8 @@ h1 {
   width: 100%;
   border-collapse: collapse;
   margin-top: 20px;
+  border-radius: 5px;
+  overflow: hidden;
 }
 
 .data-table th,
@@ -217,8 +219,23 @@ h1 {
   border-bottom: 1px solid #2dc947;
 }
 
+.data-table th:first-child,
+.data-table td:first-child {
+  border-left: none;
+}
+
+.data-table th:last-child,
+.data-table td:last-child {
+  border-right: none;
+}
+
 .data-table th {
   background-color: #f8f8f8;
   font-weight: bold;
+  border-top: 1px solid #2dc947;
+}
+
+.data-table td {
+  border-top: 1px solid #ddd;
 }
 </style>

@@ -4,14 +4,14 @@
     <v-table>
       <thead>
         <tr>
-          <th class="text-left">salesData</th>
-          <th class="text-left">activityData</th>
+          <th class="text-left">SalesData</th>
+          <th class="text-left">ActivityData</th>
         </tr>
       </thead>
       <tbody>
         <tr v-for="(item, index) in data" :key="index">
-          <td>{{ item.salesData }}</td>
-          <td>{{ item.activityData }}</td>
+          <td>{{ item.SalesData }}</td>
+          <td>{{ item.ActivityData }}</td>
         </tr>
       </tbody>
     </v-table>

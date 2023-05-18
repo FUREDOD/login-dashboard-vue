@@ -2,7 +2,6 @@
   <div class="login">
     <div class="background-overlay"></div>
     <div class="background-image"></div>
-    >
     <h1>DefineX</h1>
 
     <input
