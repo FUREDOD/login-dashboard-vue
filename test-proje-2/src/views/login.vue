@@ -3,7 +3,7 @@
     <div class="background-overlay"></div>
     <div class="background-image"></div>
     >
-    <h3>DefineX</h3>
+    <h1>DefineX</h1>
 
     <input
       type="email"
@@ -113,7 +113,7 @@ export default {
 <style scoped>
 .login {
   background-color: blue;
-  background-image: url(https://docs.kariyer.net/job/jobtemplate/000/000/220/avatar/22027820200305031322126.jpeg);
+  background-image: url(https://cdn.pixabay.com/photo/2017/07/11/18/52/landscape-2494650_960_720.jpg);
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
@@ -121,7 +121,7 @@ export default {
   display: flex;
   flex-direction: column;
   align-items: center;
-  height: 100vh; /* Sayfanın tamamını kaplaması için ekledik */
+  height: 100vh;
 }
 
 .is-invalid {
