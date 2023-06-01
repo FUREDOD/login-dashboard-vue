@@ -3,14 +3,36 @@ import { createStore } from "vuex";
 const store = createStore({
   state() {
     return {
-      // burada state'lerinizi tanımlayabilirsiniz
+      count: 0,
+      isLoggedIn: false,
+      user: null,
     };
   },
   mutations: {
-    // burada state'lerinizi güncelleyen mutations'ları tanımlayabilirsiniz
+    increment(state) {
+      state.count++;
+    },
+    login(state, user) {
+      state.isLoggedIn = true;
+      state.user = user;
+    },
+    logout(state) {
+      state.isLoggedIn = false;
+      state.user = null;
+    },
   },
   actions: {
-    // burada mutations'ları çağıran ve asenkron işlemleri gerçekleştiren actions'ları tanımlayabilirsiniz
+    async fetchUser(context, userId) {
+      try {
+        const response = await API.getUser(userId);
+        context.commit("login", response.data);
+      } catch (error) {
+        console.error(error);
+      }
+    },
+    logout(context) {
+      context.commit("logout");
+    },
   },
 });
 

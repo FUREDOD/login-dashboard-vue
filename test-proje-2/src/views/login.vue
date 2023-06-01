@@ -78,7 +78,7 @@ export default {
 
           if (response.data.IsSucceed) {
             this.$toast.success("Giriş başarılı.");
-
+            localStorage.setItem("at", response.data.Response.AccessToken);
             this.$router.push("/user-dashboard");
           } else {
             this.$toast.error("Giriş başarısız.");

@@ -13,4 +13,16 @@ export default class Api {
   login(data) {
     return this.apiClient.post("/Authentication/Login", data);
   }
+
+  logout() {
+    return this.apiClient.get("/Authentication/Logout");
+  }
+
+  getClients() {
+    return this.apiClient.get("/management/Client/Clients", {
+      headers: {
+        Authorization: "Bearer " + localStorage.getItem("at"),
+      },
+    });
+  }
 }

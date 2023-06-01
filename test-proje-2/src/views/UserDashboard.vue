@@ -1,241 +1,491 @@
-<!-- eslint-disable vue/no-unused-components -->
 <template>
-  <div class="dashboard">
-    <header>
-      <div class="search-box">
-        <input type="text" placeholder="Search..." />
-        <button>Search</button>
+  <div class="dashboard" :class="{ 'dark-mode': isDarkMode }">
+    <div class="sidebar">
+      <div class="logo">
+        <img src="DefineX.logo.png" alt="DefineX logo" />
+        <h3>Dashboard</h3>
       </div>
-    </header>
-    <section class="main-content">
-      <div class="widgets-container">
-        <v-card>
-          <v-toolbar color="blue">
-            <v-app-bar-nav-icon>DefineX</v-app-bar-nav-icon>
-            <v-toolbar-title>Your Dashboard</v-toolbar-title>
-            <v-spacer></v-spacer>
-            <v-btn icon>
-              <v-icon>mdi-magnify</v-icon>
-            </v-btn>
-            <v-btn icon>
-              <v-icon>mdi-dots-vertical</v-icon>
-            </v-btn>
-            <template v-slot:extension>
-              <v-tabs v-model="tab" align-tabs="title">
-                <v-tab v-for="item in items" :key="item" :value="item">
-                  {{ item }}
-                </v-tab>
-              </v-tabs>
-            </template>
-          </v-toolbar>
-          <v-window v-model="tab">
-            <v-window-item v-for="item in items" :key="item" :value="item">
-              <v-card flat>
-                <v-card-text v-text="text"></v-card-text>
-              </v-card>
-            </v-window-item>
-          </v-window>
-        </v-card>
-        <v-table class="data-table">
+      <ul class="menu">
+        <li
+          :class="{ 'menu-item': true, active: activeMenuItem === 'Home' }"
+          @click="setActiveMenuItem('Home')"
+        >
+          <i class="fas fa-home"></i>
+          <span>Home</span>
+        </li>
+        <li
+          :class="{ 'menu-item': true, active: activeMenuItem === 'Messages' }"
+          @click="setActiveMenuItem('Messages')"
+        >
+          <i class="fas fa-envelope"></i>
+          <span>Messages</span>
+        </li>
+        <li
+          :class="{ 'menu-item': true, active: activeMenuItem === 'Settings' }"
+          @click="setActiveMenuItem('Settings')"
+        >
+          <i class="fas fa-cog"></i>
+          <span>Settings</span>
+        </li>
+      </ul>
+      <button class="logout-button" @click="logout">Logout</button>
+    </div>
+    <div class="content">
+      <div v-if="activeMenuItem === 'Home'">
+        <div class="input-container">
+          <input type="text" v-model="searchText" placeholder="Search" />
+          <button @click="search">Search</button>
+        </div>
+        <v-table>
           <thead>
             <tr>
-              <th class="text-left">Title</th>
-              <th class="text-left">Data</th>
+              <th class="text-left">Name</th>
+              <th class="text-left">Programming Language</th>
+              <th class="text-left">Framework</th>
+              <th class="text-left">Experience (in years)</th>
             </tr>
           </thead>
           <tbody>
-            <tr v-for="item in desserts" :key="item.title">
-              <td>{{ item.title }}</td>
-              <td>{{ item.data }}</td>
-
-              <td>Sales Overview</td>
-              <td>
-                <v-table>
-                  <thead>
-                    <tr>
-                      <th class="text-left">Month</th>
-                      <th class="text-left">Sales</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr v-for="item in salesData" :key="item.month">
-                      <td>{{ item.month }}</td>
-                      <td>{{ item.sales }}</td>
-                    </tr>
-                  </tbody>
-                </v-table>
-              </td>
-            </tr>
-            <tr>
-              <td>User Activity</td>
-              <td>
-                <v-table>
-                  <thead>
-                    <tr>
-                      <th class="text-left">User</th>
-                      <th class="text-left">Activity</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr v-for="item in activityData" :key="item.user">
-                      <td>{{ item.user }}</td>
-                      <td>{{ item.activity }}</td>
-                    </tr>
-                  </tbody>
-                </v-table>
-              </td>
-            </tr>
-            <tr>
-              <td>Top Products</td>
-              <td>
-                <v-table>
-                  <thead>
-                    <tr>
-                      <th class="text-left">Name</th>
-                      <th class="text-left">Sales</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr v-for="item in productData" :key="item.name">
-                      <td>{{ item.name }}</td>
-                      <td>{{ item.sales }}</td>
-                    </tr>
-                  </tbody>
-                </v-table>
-              </td>
+            <tr v-for="item in filteredDesserts" :key="item.name">
+              <td>{{ item.name }}</td>
+              <td>{{ item.branch }}</td>
+              <td>{{ item.framework }}</td>
+              <td>{{ item.experience }}</td>
             </tr>
           </tbody>
         </v-table>
-        <div class="chart-container">
-          <line-chart :activitydata="activityData" />
+      </div>
+      <div v-if="activeMenuItem === 'Messages'">
+        <h1>Messages Page</h1>
+        <ul class="message-list">
+          <li
+            v-for="message in messages"
+            :key="message.id"
+            class="message-item"
+          >
+            <div class="message-header">
+              <span class="message-sender">{{ message.sender }}</span>
+              <span class="message-time">{{ message.time }}</span>
+            </div>
+            <div class="message-content">{{ message.content }}</div>
+          </li>
+        </ul>
+      </div>
+      <div v-if="activeMenuItem === 'Settings'">
+        <h1>Settings Page</h1>
+        <div class="dark-mode-toggle">
+          <span>Dark Mode:</span>
+          <label class="switch">
+            <input
+              type="checkbox"
+              v-model="darkMode"
+              @change="toggleDarkMode"
+            />
+            <span class="slider round"></span>
+          </label>
         </div>
       </div>
-    </section>
+    </div>
   </div>
 </template>
 
 <script>
-import Widget from "../views/UserWidget.vue";
-import LineChart from "..//views/LineChart.vue";
-
 export default {
-  name: "UserDashboard",
-  components: {
-    Widget,
-    LineChart,
-  },
   data() {
     return {
-      salesData: [
-        { month: "Jan", sales: 1000 },
-        { month: "Feb", sales: 1200 },
-        { month: "Mar", sales: 800 },
-        { month: "Apr", sales: 1500 },
-        { month: "May", sales: 1700 },
-        { month: "Jun", sales: 1300 },
+      clients: [],
+      activeMenuItem: "Home",
+      searchText: "",
+      desserts: [
+        { name: "John", branch: "Python", framework: "Django", experience: 5 },
+        {
+          name: "Emma",
+          branch: "JavaScript",
+          framework: "Vue.js",
+          experience: 3,
+        },
+        { name: "Sarah", branch: "Java", framework: "Spring", experience: 7 },
+        { name: "Michael", branch: "C#", framework: ".NET", experience: 4 },
+        {
+          name: "Emily",
+          branch: "Ruby",
+          framework: "Ruby on Rails",
+          experience: 6,
+        },
+        { name: "David", branch: "PHP", framework: "Laravel", experience: 2 },
+        { name: "Sophia", branch: "Python", framework: "Flask", experience: 3 },
+        {
+          name: "Oliver",
+          branch: "JavaScript",
+          framework: "React",
+          experience: 4,
+        },
+        {
+          name: "Isabella",
+          branch: "Java",
+          framework: "Spring Boot",
+          experience: 1,
+        },
+        { name: "Daniel", branch: "C#", framework: "ASP.NET", experience: 3 },
+        { name: "Ava", branch: "Ruby", framework: "Sinatra", experience: 2 },
+        {
+          name: "Ethan",
+          branch: "PHP",
+          framework: "CodeIgniter",
+          experience: 2,
+        },
+        { name: "Mia", branch: "Python", framework: "Django", experience: 2 },
+        {
+          name: "Noah",
+          branch: "JavaScript",
+          framework: "Vue.js",
+          experience: 3,
+        },
+        { name: "Liam", branch: "Java", framework: "Hibernate", experience: 2 },
       ],
-      activityData: [
-        { user: "John", activity: "Logged in" },
-        { user: "Jane", activity: "Added item to cart" },
-        { user: "Bob", activity: "Viewed product" },
-        { user: "Mary", activity: "Purchased item" },
+      isDarkMode: false,
+      messages: [
+        {
+          id: 1,
+          sender: "John Doe",
+          time: "10:00 AM",
+          content: "Hello, how are you?",
+        },
+        {
+          id: 2,
+          sender: "Jane Smith",
+          time: "11:30 AM",
+          content: "I'm good. Thanks for asking!",
+        },
+        {
+          id: 3,
+          sender: "New Sender 1",
+          time: "1:30 PM",
+          content: "This is a new message.",
+        },
+        {
+          id: 4,
+          sender: "New Sender 2",
+          time: "2:30 PM",
+          content: "Another new message.",
+        },
+        {
+          id: 5,
+          sender: "New Sender 3",
+          time: "3:30 PM",
+          content: "Yet another new message.",
+        },
+        {
+          id: 6,
+          sender: "New Sender 4",
+          time: "4:30 PM",
+          content: "One more new message.",
+        },
+        {
+          id: 7,
+          sender: "New Sender 5",
+          time: "5:30 PM",
+          content: "Last new message.",
+        },
       ],
-      productData: [
-        { name: "Product A", sales: 500 },
-        { name: "Product B", sales: 700 },
-        { name: "Product C", sales: 900 },
-        { name: "Product D", sales: 1200 },
-      ],
-      chartData: {
-        labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun"],
-        datasets: [
-          {
-            label: "Sales",
-            data: [1000, 1200, 800, 1500, 1700, 1300],
-            backgroundColor: "rgba(255, 99, 132, 0.2)",
-            borderColor: "rgba(255, 99, 132, 1)",
-            borderWidth: 1,
-          },
-        ],
-      },
-      tab: null,
-      items: ["web", "shopping", "videos", "images", "news"],
-      text: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
     };
+  },
+  created() {
+    this.fetchClients();
+  },
+  computed: {
+    filteredDesserts() {
+      return this.desserts.filter((dessert) =>
+        dessert.name.toLowerCase().includes(this.searchText.toLowerCase())
+      );
+    },
+  },
+  methods: {
+    fetchClients() {
+      const token = "at";
+
+      fetch(
+        "https://api-testxtre.definexlabs.com/api/management/Client/Clients",
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      )
+        .then((response) => response.json())
+        .then((data) => {
+          this.clients = data;
+        })
+        .catch((error) => {
+          console.error("Müşterileri getirirken hata oluştu:", error);
+        });
+    },
+    setActiveMenuItem(item) {
+      this.activeMenuItem = item;
+    },
+    search() {},
+    logout() {
+      localStorage.removeItem("isLoggedIn");
+      this.$router.push({ name: "login" });
+    },
+    toggleDarkMode() {
+      this.isDarkMode = !this.isDarkMode;
+    },
   },
 };
 </script>
 
 <style scoped>
 .dashboard {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 20px;
+  display: flex;
+  height: 100vh;
+  background-color: #f8f8f8;
 }
 
-header {
+.sidebar {
+  width: 200px;
+  background-color: #ffffff;
+}
+
+.logo {
   display: flex;
-  justify-content: space-between;
   align-items: center;
+  padding: 20px;
+  background-color: #ffffff;
+  border-bottom: 1px solid #ccc;
 }
 
-h1 {
-  font-size: 36px;
+.logo img {
+  width: 40px;
+  height: 40px;
+  margin-right: 10px;
+  border-radius: 50%;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
-.search-box {
+.menu {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.menu-item {
   display: flex;
-}
-
-.search-box input[type="text"] {
-  padding: 10px;
-  border-radius: 5px 0 0 5px;
-  border: none;
-  outline: none;
-}
-
-.search-box button {
+  align-items: center;
   padding: 10px 20px;
-  border-radius: 0 5px 5px 0;
-  border: none;
-  outline: none;
-  background-color: #333;
-  color: #fff;
   cursor: pointer;
 }
 
-.data-table {
+.menu-item.active {
+  background-color: #525eff;
+}
+
+.menu-item i {
+  margin-right: 10px;
+}
+
+.content {
+  flex: 1;
+  padding: 20px;
+}
+
+.logout-button {
+  display: block;
+  width: 100%;
+  padding: 10px 20px;
+  margin-top: 20px;
+  background-color: #ffffff;
+  border: none;
+  text-align: left;
+  cursor: pointer;
+}
+
+.logout-button:hover {
+  background-color: #ff0000;
+}
+
+.input-container {
+  display: flex;
+  margin-bottom: 20px;
+}
+
+.input-container input {
+  flex: 1;
+  padding: 10px;
+  font-size: 14px;
+  border: 1px solid #000000;
+  border-radius: 4px 0 0 4px;
+}
+
+.input-container button {
+  padding: 10px 20px;
+  background-color: #4caf50;
+  color: #ffffff;
+  border: none;
+  border-radius: 0 4px 4px 0;
+  cursor: pointer;
+}
+
+.v-table {
   width: 100%;
   border-collapse: collapse;
-  margin-top: 20px;
-  border-radius: 5px;
-  overflow: hidden;
 }
 
-.data-table th,
-.data-table td {
-  padding: 8px;
+.v-table th,
+.v-table td {
+  padding: 10px;
+  border-bottom: 1px solid #ccc;
   text-align: left;
-  border-bottom: 1px solid #2dc947;
 }
 
-.data-table th:first-child,
-.data-table td:first-child {
-  border-left: none;
+.v-table th {
+  background-color: #5900ff;
 }
 
-.data-table th:last-child,
-.data-table td:last-child {
-  border-right: none;
+.v-table td {
+  background-color: #ffffff;
 }
 
-.data-table th {
-  background-color: #f8f8f8;
+.message-list {
+  list-style: none;
+  padding: 0;
+}
+
+.message-item {
+  margin-bottom: 20px;
+  padding: 10px;
+  border: 1px solid #fd0000;
+}
+
+.message-header {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
+
+.message-sender {
   font-weight: bold;
-  border-top: 1px solid #2dc947;
 }
 
-.data-table td {
-  border-top: 1px solid #ddd;
+.message-time {
+  color: #888888;
+}
+
+.dark-mode-toggle {
+  display: flex;
+  align-items: center;
+  margin-top: 20px;
+}
+
+.dark-mode-toggle span {
+  margin-right: 10px;
+}
+
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 40px;
+  height: 20px;
+}
+
+.switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #ccc;
+  -webkit-transition: 0.4s;
+  transition: 0.4s;
+}
+
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 14px;
+  width: 14px;
+  left: 3px;
+  bottom: 3px;
+  background-color: rgb(255, 71, 71);
+  -webkit-transition: 0.4s;
+  transition: 0.4s;
+}
+
+input:checked + .slider {
+  background-color: #098cf8;
+}
+
+input:focus + .slider {
+  box-shadow: 0 0 1px #2196f3;
+}
+
+input:checked + .slider:before {
+  -webkit-transform: translateX(20px);
+  -ms-transform: translateX(20px);
+  transform: translateX(20px);
+}
+
+.slider.round {
+  border-radius: 34px;
+}
+
+.slider.round:before {
+  border-radius: 50%;
+}
+.dark-mode {
+  background-color: #333333;
+  color: #ffffff;
+}
+.dark-mode .logo {
+  background-color: #333333;
+  color: #f8f8f8;
+}
+
+.dark-mode .sidebar {
+  background-color: #444444;
+  color: #ffffff;
+}
+
+.dark-mode .menu-item.active {
+  background-color: #555555;
+}
+
+.dark-mode .logout-button {
+  background-color: #444444;
+  color: #ffffff;
+}
+
+.dark-mode .input-container input {
+  border: 1px solid #999999;
+  color: #ffffff;
+}
+
+.dark-mode .v-table th {
+  background-color: #555555;
+  color: #ffffff;
+}
+
+.dark-mode .v-table td {
+  background-color: #444444;
+  color: #ffffff;
+}
+
+.dark-mode .message-item {
+  border: 1px solid #999999;
+}
+
+.dark-mode .message-sender {
+  color: #ffffff;
+}
+
+.dark-mode .message-time {
+  color: #cccccc;
 }
 </style>
