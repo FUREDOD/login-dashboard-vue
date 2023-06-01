@@ -2,7 +2,7 @@ import axios from "axios";
 
 export default class Api {
   apiClient = axios.create({
-    baseURL: "https://api-testxtre.definexlabs.com/api/account",
+    baseURL: "https://api-testxtre.definexlabs.com/api/",
     withCredentials: false,
     headers: {
       Accept: "application/json",
@@ -11,11 +11,11 @@ export default class Api {
   });
 
   login(data) {
-    return this.apiClient.post("/Authentication/Login", data);
+    return this.apiClient.post("/account/Authentication/Login", data);
   }
 
   logout() {
-    return this.apiClient.get("/Authentication/Logout");
+    return this.apiClient.get("/account/Authentication/Logout");
   }
 
   getClients() {

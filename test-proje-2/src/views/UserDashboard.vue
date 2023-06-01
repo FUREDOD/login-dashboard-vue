@@ -46,11 +46,11 @@
             </tr>
           </thead>
           <tbody>
-            <tr v-for="item in filteredDesserts" :key="item.name">
-              <td>{{ item.name }}</td>
-              <td>{{ item.branch }}</td>
-              <td>{{ item.framework }}</td>
-              <td>{{ item.experience }}</td>
+            <tr v-for="item in clientList" :key="item.Id">
+              <td>{{ item.Code }}</td>
+              <td>{{ item.Name }}</td>
+              <td>{{ item.TaxNumber }}</td>
+              <td>{{ item.Address }}</td>
             </tr>
           </tbody>
         </v-table>
@@ -90,10 +90,11 @@
 </template>
 
 <script>
+import Api from "../services/api";
 export default {
   data() {
     return {
-      clients: [],
+      clientList: [],
       activeMenuItem: "Home",
       searchText: "",
       desserts: [
@@ -201,24 +202,12 @@ export default {
     },
   },
   methods: {
-    fetchClients() {
-      const token = "at";
+    async fetchClients() {
+      const api = new Api();
+      const response = await api.getClients();
 
-      fetch(
-        "https://api-testxtre.definexlabs.com/api/management/Client/Clients",
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      )
-        .then((response) => response.json())
-        .then((data) => {
-          this.clients = data;
-        })
-        .catch((error) => {
-          console.error("Müşterileri getirirken hata oluştu:", error);
-        });
+      console.log(response.data);
+      this.clientList = response.data.Response;
     },
     setActiveMenuItem(item) {
       this.activeMenuItem = item;
